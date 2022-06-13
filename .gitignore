@@ -3,3 +3,6 @@
 #git ignore
 
 .env
+db.sqlite3
+
+main/__pycache__/*
