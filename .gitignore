@@ -1,8 +1,10 @@
+# ignore all logs
+*.log
+
+# ignore env
+*.env
 
 
-#git ignore
+*db.sqlite3
 
-.env
-db.sqlite3
-
-main/__pycache__/*
+*/main/__pycache__/
