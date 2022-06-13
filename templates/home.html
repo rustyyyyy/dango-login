@@ -40,7 +40,6 @@
 
 <body>
     <div class="container mt-4">
-        
         {% if user.is_authenticated %}
             <p>Hi, <span class="h5"> {{ user.username }}</span>! </p>
             <p>Your email is: <b>{{ user.email }}</b></p>
@@ -52,6 +51,8 @@
                 <a href="{% url 'login' %}">Log In</a>
             </div>
             {% endif %}
+
+            <img src="{% static 'auth.jpg' %}" alt="" width="600" height="500">
     </div>
 
 </body>

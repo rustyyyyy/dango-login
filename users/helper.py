@@ -1,10 +1,7 @@
 import os
 from pathlib import Path
-
 import environ
 import requests
-import sendgrid
-from sendgrid.helpers.mail import Content, Email, Mail
 
 from config.models import EmailVerification
 
@@ -17,6 +14,7 @@ env = environ.Env()
 env_file = os.path.join(BASE_DIR, ".env")
 environ.Env.read_env(env_file)
 
+api_key = env("api_key")
 
 def captcha_validation(recaptcha_response=None, secret=None):
     data = {"secret": secret, "response": recaptcha_response}
@@ -31,6 +29,7 @@ def captcha_validation(recaptcha_response=None, secret=None):
 
 
 def email_verification(email=None):
+    import json
     import random
 
     otp_code = random.randint(11111, 99999)
@@ -39,22 +38,27 @@ def email_verification(email=None):
     new_user = EmailVerification(user=user, verification_code=otp_code, verified=False)
     new_user.save()
 
-    sg = sendgrid.SendGridAPIClient(api_key=env("SENDGRID_API_KEY"))
-    from_email = Email(env("sendgrid_from_email"))
+    url = "https://api.sendinblue.com/v3/smtp/email"
 
-    subject = "Email verification"
-    content = Content("text/plain", "Your verification code is " + str(otp_code))
-    mail = Mail(from_email, email, subject, content)
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "api-key": api_key,
+    }
 
-    # Get a JSON-ready representation of the Mail object
-    mail_json = mail.get()
+    data = {
+        "body": "hello",
+        "sender": {"name": "admin@cs_login", "email": "ajul@ismt.edu.np"},
+        "subject": "Email Verification",
+        "to": [{"email": f"{email}", "name": "test_name"}],
+        "textContent": f"Your verification code is {otp_code}",
+    }
 
-    # Send an HTTP POST request to /mail/send
-    response = sg.client.mail.send.post(request_body=mail_json)
+    response = requests.post(url, headers=headers, data=json.dumps(data))
 
-    # print(response.status_code)
+    print(response)
 
-    if response.status_code == 202:
+    if response.status_code == 201:
         user = CustomUser.objects.get(email=email)
         user_id = EmailVerification.objects.get(user=user).id
 

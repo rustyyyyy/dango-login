@@ -5,6 +5,6 @@
 *.env
 
 
-*db.sqlite3
+./db.sqlite3
 
 */main/__pycache__/
