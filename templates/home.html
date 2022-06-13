@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- FONT AWESOME CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
+
+    <style>
+        ul {
+            padding: 0px;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Roboto Slab', serif;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-4">
+        
+        {% if user.is_authenticated %}
+            <p>Hi, <span class="h5"> {{ user.username }}</span>! </p>
+            <p>Your email is: <b>{{ user.email }}</b></p>
+            <div class="mt-3">
+                <a href="{% url 'logout' %}">Log Out</a>
+            </div>
+            {% else %}
+            <div class="mt-3">
+                <a href="{% url 'login' %}">Log In</a>
+            </div>
+            {% endif %}
+    </div>
+
+</body>
+
+</html>

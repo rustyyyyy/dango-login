@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- FONT AWESOME CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
+
+    <style>
+        ul{
+            padding: 0px;
+        }
+        h1,h2,h3,h4{
+            font-family: 'Roboto Slab', serif;
+        }
+        body{
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container  mt-5 mb-3">
+        <h1 class="mb-5">Login</h1>
+        <div class="row">
+            <div class="col-lg-6">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_email">Email address:</label>
+                        <input type="email" class="form-control" placeholder="Enter email" name="username" maxlength="254"
+                            autofocus required id="id_email">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password1">Password:</label>
+                        <input type="password" class="form-control" placeholder="Enter password" name="password"
+                            autocomplete="new-password" required id="id_password1">
+                    </div>
+                    <button class="btn text-white mt-3 px-4 py-2" style="background-color: #005eba; font-size: 18px; letter-spacing: 1px;" type="submit">
+                        <b>Login</b>
+                    </button> 
+                    <div class="mt-5">
+                        {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger">
+                                        <p>{{ error|escape }}</p>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    <p>{{ error|escape }}</p>
+                                </div>
+                            {% endfor %}
+
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6 d-flex">
+                <div class="align-self-center">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

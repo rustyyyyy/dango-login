@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Signup</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- RECAPTCHA CDN -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer> </script>
+
+    <!-- FONT AWESOME CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
+
+    <style>
+        ul{
+            padding: 0px;
+        }
+        h1,h2,h3,h4{
+            font-family: 'Roboto Slab', serif;
+        }
+        body{
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container  my-3 shadow p-5">
+        <h1 class="mb-5">Sign up</h1>
+        <div class="row">
+            <div class="col-lg-6">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_username">Username:</label>
+                        <input type="text" name="username" maxlength="200" class="form-control" placeholder="Enter username"  autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_email">Email address:</label>
+                        <input type="email" class="form-control" placeholder="Enter email" name="email" maxlength="254"
+                            autofocus required id="id_email">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password1">Password:</label>
+                        <input type="password" class="form-control" placeholder="Enter password" name="password1"
+                            autocomplete="new-password" required id="id_password1">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password2">Confirm Password:</label>
+                        <input type="password" class="form-control" placeholder="Enter confirm password"
+                            name="password2" autocomplete="new-password" required id="id_password2">
+                    </div>
+                    <div class="my-4">
+                        <div class="g-recaptcha" data-sitekey="{{site_key}}"></div>
+                    </div>
+                    <input class="btn text-white mt-3 px-4 py-2" style="background-color: #008CBA;" type="submit" value="Submit">
+                </form>
+            </div>
+            <div class="col-lg-6 d-flex">
+                <div class="align-self-center">
+                    <div class="ml-4 mt-lg-none mt-4">
+                        {% for field in form %}
+                            {% if field.help_text %}
+                            {{ field.help_text }}
+                            {% endif %}
+                        {% endfor %}
+                        {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                            <div class="alert alert-danger my-4">
+                                <p class="m-0">{{ error|escape }}</p>
+                            </div>
+                            {% endfor %}
+                        {% endfor %}
+                        {% endif %}
+                        {% if message %}
+                            <div class="alert alert-danger my-4">
+                                <p class="m-0">{{ message }}</p>
+                            </div>
+                        {% endif %}
+                        {% if success %}
+                            <div class="alert alert-success my-4">
+                                <p class="m-0">{{ success }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
