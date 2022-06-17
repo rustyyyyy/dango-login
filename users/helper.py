@@ -47,7 +47,7 @@ def email_verification(email=None):
     }
 
     data = {
-        "body": "hello",
+        "body": "Email Verification",
         "sender": {"name": "admin@cs_login", "email": "ajul@ismt.edu.np"},
         "subject": "Email Verification",
         "to": [{"email": f"{email}", "name": "test_name"}],
